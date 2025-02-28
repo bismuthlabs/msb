@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { cn } from "@/lib/utils"
 import ChatWidget from "@/components/chat/chat-widget"
 import type { SlideWithUrl } from "@/lib/types"
-import { SiteHeader } from "./site-header"
+import { SiteHeader } from "@/components/site-header"
 import { useSession } from "next-auth/react"
 
 const COURSES = [
