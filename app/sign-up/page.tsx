@@ -10,13 +10,15 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { supabase } from "@/lib/supabase-client"
+import { Eye, EyeOff } from "lucide-react"
 
 export default function SignUpPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [username, setUsername] = useState("") // New state for username
+  const [username, setUsername] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -30,25 +32,20 @@ export default function SignUpPage() {
         password,
         options: {
           emailRedirectTo: `${window.location.origin}/auth/callback`,
-          data: {
-            username, // Store username in user_metadata
-          },
+          data: { username },
         },
       })
 
       if (error) throw error
 
       if (data.session) {
-        // Sign in with NextAuth using the credentials
         const signInResult = await signIn("credentials", {
           email,
           password,
           redirect: false,
         })
 
-        if (signInResult?.error) {
-          throw new Error(signInResult.error)
-        }
+        if (signInResult?.error) throw new Error(signInResult.error)
 
         router.push("/home")
       } else if (data.user) {
@@ -96,16 +93,25 @@ export default function SignUpPage() {
               required
             />
           </div>
-          <div className="space-y-2">
+          <div className="space-y-2 relative">
             <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+            <div className="relative">
+              <Input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter your password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
           {error && <p className="text-sm text-red-500">{error}</p>}
           <Button type="submit" className="w-full" disabled={loading || !username}>
