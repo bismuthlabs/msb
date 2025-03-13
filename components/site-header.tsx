@@ -40,7 +40,7 @@ export function SiteHeader({ user, onSearch }: SiteHeaderProps) {
     <>
       <div className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60">
         <div className="container flex h-14 items-center justify-between">
-          <h1 className="text-lg sm:text-xl font-bold">MSB</h1>
+          <h1 className="text-lg sm:text-xl font-bold">My Slide Bank</h1>
           {user ? (
             <div className="flex items-center gap-2">
               <div>

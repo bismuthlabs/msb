@@ -23,6 +23,7 @@ export default async function RootLayout({
     <html lang="en" className="bg-[#F0F9FF] font-serif">
       <body className={`min-h-screen bg-[#F0F9FF]`}>
         <AuthProvider>
+        
           {children}
         </AuthProvider>
       </body>
